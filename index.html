@@ -16,8 +16,8 @@
       text-align: center;
       overflow: hidden;
 
-      /* CAT BACKGROUND */
-      background: url("cat.jpb.webp") center/cover no-repeat;
+      /* CAT BACKGROUND (must match the exact file name in your repo) */
+      background: url("cat.jpg.webp") center/cover no-repeat;
     }
 
     h1 {
@@ -70,7 +70,7 @@
       noBtn.style.top = y + "px";
     }
 
-    // makes it run away when she gets close
+    // runs away when she gets close OR tries to click
     noBtn.addEventListener("mouseenter", moveButton);
     noBtn.addEventListener("click", moveButton);
 
@@ -81,3 +81,4 @@
 
 </body>
 </html>
+
