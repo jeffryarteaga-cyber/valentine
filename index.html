@@ -16,7 +16,6 @@
       text-align: center;
       overflow: hidden;
 
-      /* CAT BACKGROUND (must match the exact file name in your repo) */
       background: url("cat.jpg.webp") center/cover no-repeat;
     }
 
@@ -46,6 +45,32 @@
       background: white;
       position: relative;
     }
+
+    /* VIDEO SCREEN */
+    #videoScreen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: black;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    #videoScreen h2 {
+      position: absolute;
+      top: 30px;
+      color: white;
+      font-size: 3rem;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+      z-index: 2;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   </style>
 </head>
 
@@ -58,8 +83,18 @@
     <button id="noBtn">No</button>
   </div>
 
+  <!-- Video Celebration Screen -->
+  <div id="videoScreen">
+    <h2>HOORAY 🎉</h2>
+    <video autoplay loop>
+      <source src="cute.mp4.mov" type="video/mp4">
+    </video>
+  </div>
+
   <script>
     const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const videoScreen = document.getElementById("videoScreen");
 
     function moveButton() {
       const x = Math.random() * (window.innerWidth - 120);
@@ -70,15 +105,15 @@
       noBtn.style.top = y + "px";
     }
 
-    // runs away when she gets close OR tries to click
     noBtn.addEventListener("mouseenter", moveButton);
     noBtn.addEventListener("click", moveButton);
 
-    document.getElementById("yesBtn").addEventListener("click", () => {
-      alert("YAY ❤️ Best answer ever.");
+    yesBtn.addEventListener("click", () => {
+      document.body.innerHTML = "";
+      videoScreen.style.display = "flex";
+      document.body.appendChild(videoScreen);
     });
   </script>
 
 </body>
 </html>
-
