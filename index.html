@@ -1,29 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Valentine</title>
+
+  <!-- Nicer, non-robotic font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
   <style>
     body {
       margin: 0;
       height: 100vh;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    /* FIRST SCREEN (cat background) */
+    #askScreen {
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      font-family: Arial, sans-serif;
       text-align: center;
-      overflow: hidden;
-
       background: url("cat.jpg.webp") center/cover no-repeat;
     }
 
-    h1 {
+    #askScreen h1 {
       color: white;
       font-size: 3rem;
       text-shadow: 0 4px 15px rgba(0,0,0,0.6);
-      margin-bottom: 40px;
+      margin: 0 0 40px;
+      padding: 0 14px;
     }
 
     button {
@@ -46,60 +57,92 @@
       position: relative;
     }
 
-    /* VIDEO SCREEN */
-    #videoScreen {
+    /* YES SCREEN (white background + square video) */
+    #yesScreen {
       display: none;
-      position: fixed;
-      inset: 0;
-      background: black;
+      height: 100vh;
+      background: white;
+      position: relative;
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      gap: 18px;
+      text-align: center;
+      padding: 24px;
     }
 
-    #videoScreen h2 {
-      position: absolute;
-      top: 30px;
-      color: white;
-      font-size: 3rem;
-      text-shadow: 0 4px 15px rgba(0,0,0,0.8);
-      z-index: 2;
+    #yesScreen h2 {
+      margin: 0;
+      font-family: "Pacifico", cursive;
+      font-size: 64px;
+      color: #ff4d6d;
+    }
+
+    .videoBox {
+      width: min(360px, 80vw);
+      aspect-ratio: 1 / 1;   /* perfect square */
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.15);
+      background: #f3f3f3;
     }
 
     video {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #777;
+      margin-top: 4px;
+      max-width: 520px;
+      line-height: 1.4;
     }
   </style>
 </head>
 
 <body>
 
-  <h1>Will you be my Valentine?</h1>
-
-  <div>
-    <button id="yesBtn">Yes ❤️</button>
-    <button id="noBtn">No</button>
+  <!-- SCREEN 1 -->
+  <div id="askScreen">
+    <h1>Will you be my Valentine?</h1>
+    <div>
+      <button id="yesBtn">Yes ❤️</button>
+      <button id="noBtn">No</button>
+    </div>
   </div>
 
-  <!-- Video Celebration Screen -->
-  <div id="videoScreen">
-    <h2>HOORAY 🎉</h2>
-    <video autoplay loop>
-      <source src="cute.mp4.mov" type="video/mp4">
-    </video>
+  <!-- SCREEN 2 -->
+  <div id="yesScreen">
+    <h2>Hooray!</h2>
+
+    <div class="videoBox">
+      <!-- muted + playsinline helps autoplay work on phones/laptops -->
+      <video id="vdayVideo" autoplay loop muted playsinline>
+        <source src="cute.mp4.mov" type="video/quicktime">
+        <source src="cute.mp4.mov" type="video/mp4">
+        Your browser can’t play this video.
+      </video>
+    </div>
+
+    <div class="hint">
+      If the video still doesn’t start, try re-exporting as a plain .mp4 (H.264) and name it <b>cute.mp4</b>.
+    </div>
   </div>
 
   <script>
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
-    const videoScreen = document.getElementById("videoScreen");
+    const askScreen = document.getElementById("askScreen");
+    const yesScreen = document.getElementById("yesScreen");
+    const vdayVideo = document.getElementById("vdayVideo");
 
     function moveButton() {
       const x = Math.random() * (window.innerWidth - 120);
       const y = Math.random() * (window.innerHeight - 60);
-
       noBtn.style.position = "absolute";
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
@@ -108,10 +151,17 @@
     noBtn.addEventListener("mouseenter", moveButton);
     noBtn.addEventListener("click", moveButton);
 
-    yesBtn.addEventListener("click", () => {
-      document.body.innerHTML = "";
-      videoScreen.style.display = "flex";
-      document.body.appendChild(videoScreen);
+    yesBtn.addEventListener("click", async () => {
+      askScreen.style.display = "none";
+      yesScreen.style.display = "flex";
+
+      // Try to force playback (some browsers need a direct play() call)
+      try {
+        await vdayVideo.play();
+      } catch (e) {
+        // If autoplay is blocked, user can tap the video to start
+        vdayVideo.controls = true;
+      }
     });
   </script>
 
