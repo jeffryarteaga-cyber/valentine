@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8" />
   <title>Valentine</title>
+
   <style>
     body {
       margin: 0;
@@ -14,8 +16,8 @@
       text-align: center;
       overflow: hidden;
 
-      /* Background cat image */
-      background: url("cat.jpg") center/cover no-repeat;
+      /* CAT BACKGROUND */
+      background: url("cat.jpb.webp") center/cover no-repeat;
     }
 
     h1 {
@@ -25,18 +27,14 @@
       margin-bottom: 40px;
     }
 
-    .buttons {
-      position: relative;
-    }
-
     button {
       font-size: 20px;
-      padding: 12px 24px;
+      padding: 12px 28px;
       border-radius: 30px;
       border: none;
       cursor: pointer;
       margin: 10px;
-      transition: 0.2s;
+      transition: 0.2s ease;
     }
 
     #yesBtn {
@@ -50,11 +48,12 @@
     }
   </style>
 </head>
+
 <body>
 
   <h1>Will you be my Valentine?</h1>
 
-  <div class="buttons">
+  <div>
     <button id="yesBtn">Yes ❤️</button>
     <button id="noBtn">No</button>
   </div>
@@ -63,18 +62,20 @@
     const noBtn = document.getElementById("noBtn");
 
     function moveButton() {
-      const x = Math.random() * (window.innerWidth - 100);
-      const y = Math.random() * (window.innerHeight - 50);
+      const x = Math.random() * (window.innerWidth - 120);
+      const y = Math.random() * (window.innerHeight - 60);
+
       noBtn.style.position = "absolute";
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
     }
 
+    // makes it run away when she gets close
     noBtn.addEventListener("mouseenter", moveButton);
     noBtn.addEventListener("click", moveButton);
 
     document.getElementById("yesBtn").addEventListener("click", () => {
-      alert("YAYYY ❤️ Best choice ever.");
+      alert("YAY ❤️ Best answer ever.");
     });
   </script>
 
