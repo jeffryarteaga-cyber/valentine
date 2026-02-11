@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Valentine</title>
 
-  <!-- Cute handwritten-style font -->
+  <!-- Cute handwritten font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
       overflow: hidden;
     }
 
-    /* FIRST SCREEN (cat background) */
+    /* SCREEN 1 */
     #askScreen {
       height: 100vh;
       display: flex;
@@ -57,7 +57,7 @@
       position: relative;
     }
 
-    /* YES SCREEN (white background + square video) */
+    /* SCREEN 2 */
     #yesScreen {
       display: none;
       height: 100vh;
@@ -79,7 +79,7 @@
 
     .videoBox {
       width: min(360px, 80vw);
-      aspect-ratio: 1 / 1; /* perfect square */
+      aspect-ratio: 1 / 1;
       border-radius: 18px;
       overflow: hidden;
       box-shadow: 0 18px 50px rgba(0,0,0,0.15);
@@ -92,19 +92,11 @@
       object-fit: cover;
       display: block;
     }
-
-    .tapHint {
-      display: none;
-      font-size: 12px;
-      color: #777;
-      margin-top: 6px;
-      line-height: 1.4;
-    }
   </style>
 </head>
 
 <body>
-  <!-- SCREEN 1 -->
+
   <div id="askScreen">
     <h1>Will you be my Valentine?</h1>
     <div>
@@ -113,17 +105,45 @@
     </div>
   </div>
 
-  <!-- SCREEN 2 -->
   <div id="yesScreen">
     <h2>Hooray!</h2>
 
     <div class="videoBox">
-      <!-- muted + playsinline helps autoplay work on phones -->
       <video id="vdayVideo" autoplay loop muted playsinline>
         <source src="cute.mp4" type="video/mp4">
-        Your browser can’t play this video.
       </video>
     </div>
+  </div>
 
-    <div class="tapHint" id="tapHint">
-      If the video doesn’t start, tap the vid
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const askScreen = document.getElementById("askScreen");
+    const yesScreen = document.getElementById("yesScreen");
+    const vdayVideo = document.getElementById("vdayVideo");
+
+    function moveButton() {
+      const x = Math.random() * (window.innerWidth - 120);
+      const y = Math.random() * (window.innerHeight - 60);
+      noBtn.style.position = "absolute";
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    noBtn.addEventListener("mouseenter", moveButton);
+    noBtn.addEventListener("click", moveButton);
+
+    yesBtn.addEventListener("click", async () => {
+      askScreen.style.display = "none";
+      yesScreen.style.display = "flex";
+
+      try {
+        await vdayVideo.play();
+      } catch {
+        vdayVideo.controls = true;
+      }
+    });
+  </script>
+
+</body>
+</html>
