@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Happy Valentine’s Day ❤️</title>
+  <style>
+    :root{
+      --bg1:#fff0f5;
+      --bg2:#ffe4e1;
+      --card:#ffffffcc;
+      --text:#1f1f1f;
+      --muted:#555;
+      --accent:#e11d48;
+      --accent2:#fb7185;
+      --shadow: 0 20px 60px rgba(0,0,0,.12);
+      --radius: 22px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:var(--font);
+      color:var(--text);
+      background: radial-gradient(1200px 800px at 20% 20%, var(--bg2), transparent 60%),
+                  radial-gradient(1200px 800px at 80% 30%, var(--bg1), transparent 60%),
+                  linear-gradient(135deg, #fff, #fff7f9);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      overflow-x:hidden;
+    }
+
+    /* floating hearts */
+    .hearts{
+      position:fixed; inset:0; pointer-events:none; overflow:hidden;
+      opacity:.55;
+    }
+    .heart{
+      position:absolute;
+      width:16px; height:16px;
+      background: var(--accent2);
+      transform: rotate(45deg);
+      border-radius: 4px;
+      animation: floatUp linear infinite;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.12));
+    }
+    .heart::before, .heart::after{
+      content:"";
+      position:absolute;
+      width:16px; height:16px;
+      background: inherit;
+      border-radius: 50%;
+    }
+    .heart::before{ left:-8px; top:0; }
+    .heart::after{ left:0; top:-8px; }
+    @keyframes floatUp{
+      from{ transform: translateY(110vh) rotate(45deg); }
+      to{ transform: translateY(-20vh) rotate(45deg); }
+    }
+
+    .wrap{
+      width:min(920px, 100%);
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 880px){
+      .wrap{ grid-template-columns:1fr; }
+    }
+
+    .card{
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.6);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 26px;
+      position:relative;
+      overflow:hidden;
+    }
+    .badge{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 14px;
+      background: rgba(225,29,72,.08);
+      border: 1px solid rgba(225,29,72,.18);
+      border-radius: 999px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    h1{
+      margin:16px 0 6px;
+      font-size: clamp(28px, 3.6vw, 46px);
+      letter-spacing:-.02em;
+    }
+    .sub{
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height:1.5;
+      font-size: 16px;
+    }
+    .quote{
+      margin-top: 14px;
+      padding: 16px 16px;
+      border-left: 4px solid rgba(225,29,72,.4);
+      background: rgba(255,255,255,.55);
+      border-radius: 14px;
+      line-height: 1.55;
+      color:#2a2a2a;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top:16px;
+    }
+    @media (max-width: 520px){
+      .grid{ grid-template-columns:1fr; }
+    }
+    .tile{
+      border-radius: 18px;
+      border: 1px solid rgba(0,0,0,.06);
+      background: rgba(255,255,255,.7);
+      padding:14px;
+    }
+    .tile h3{
+      margin:0 0 6px;
+      font-size: 15px;
+      color:#111;
+    }
+    .tile p{
+      margin:0;
+      color: var(--muted);
+      line-height:1.45;
+      font-size: 14px;
+    }
+
+    .side{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    .photo{
+      aspect-ratio: 4 / 3;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(225,29,72,.15), rgba(251,113,133,.12));
+      border: 1px dashed rgba(225,29,72,.35);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color: rgba(225,29,72,.8);
+      font-weight: 700;
+      text-align:center;
+      padding:16px;
+    }
+    .btns{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 14px;
+    }
+    button{
+      border:0;
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-weight: 700;
+      cursor:pointer;
+      transition: transform .08s ease, box-shadow .12s ease;
+    }
+    button:active{ transform: translateY(1px); }
+    .yes{
+      background: var(--accent);
+      color:white;
+      box-shadow: 0 14px 30px rgba(225,29,72,.28);
+    }
+    .no{
+      background: rgba(0,0,0,.06);
+      color:#222;
+    }
+    .small{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top:10px;
+      line-height:1.4;
+    }
+
+    .modal{
+      position:fixed; inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background: rgba(0,0,0,.35);
+      padding: 18px;
+    }
+    .modal.open{ display:flex; }
+    .modalCard{
+      width:min(520px, 100%);
+      background:white;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,.06);
+      text-align:center;
+    }
+    .modalCard h2{ margin: 6px 0 10px; }
+    .modalCard p{ margin: 0 0 16px; color: var(--muted); line-height:1.5; }
+    .close{
+      background: rgba(0,0,0,.06);
+      color:#222;
+    }
+
+    footer{
+      margin-top: 14px;
+      color: rgba(0,0,0,.45);
+      font-size: 12px;
+    }
+    a{ color: var(--accent); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="hearts" id="hearts"></div>
+
+  <main class="wrap">
+    <section class="card">
+      <div class="badge">💌 Valentine’s</div>
+      <h1>Amalia, will you be my Valentine?</h1>
+      <p class="sub">
+        I made this just for you. I’m grateful for you — for your patience, your laughs, and the way you make normal days feel better.
+      </p>
+
+      <div class="quote">
+        “If I could choose one place to be, it would be next to you.”
+      </div>
+
+      <div class="grid">
+        <div class="tile">
+          <h3>My favorite thing about you</h3>
+          <p>(Write something specific here — like how she supports you, her humor, her kindness.)</p>
+        </div>
+        <div class="tile">
+          <h3>Our next date</h3>
+          <p>(Add a plan: dinner + dessert, a walk, movie night, anything.)</p>
+        </div>
+        <div class="tile">
+          <h3>Three moments I replay</h3>
+          <p>1) ___  2) ___  3) ___</p>
+        </div>
+        <div class="tile">
+          <h3>One promise</h3>
+          <p>I’ll keep choosing you, and I’ll keep showing it.</p>
+        </div>
+      </div>
+
+      <div class="btns">
+        <button class="yes" id="yesBtn">Yes ❤️</button>
+        <button class="no" id="noBtn">No</button>
+      </div>
+      <div class="small">Tip: Replace the text placeholders, and add a photo on the right panel.</div>
+
+      <footer>
+        Made with love — <span id="date"></span>
+      </footer>
+    </section>
+
+    <aside class="side">
+      <div class="card photo" id="photoBox">
+        Drop a photo here later<br/>
+        <span style="font-weight:600; opacity:.8;">(or replace this box with an image)</span>
+      </div>
+
+      <div class="card">
+        <div style="font-weight:800; font-size:16px; margin-bottom:8px;">A little playlist idea</div>
+        <div style="color:var(--muted); line-height:1.5; font-size:14px;">
+          Put 5–10 songs that remind you of her. You can link a Spotify playlist here.
+        </div>
+        <div style="margin-top:10px;">
+          <a href="#" onclick="alert('Replace this link with your playlist URL!'); return false;">Open our playlist</a>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <div class="modal" id="modal">
+    <div class="modalCard">
+      <div style="font-size:36px;">🥰</div>
+      <h2>Best answer.</h2>
+      <p>
+        I love you. Now you owe me a date. (And yes, I’m serious.)
+      </p>
+      <button class="close" id="closeBtn">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Footer date
+    const d = new Date();
+    document.getElementById("date").textContent =
+      d.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+
+    // Hearts generator
+    const hearts = document.getElementById("hearts");
+    const heartCount = 26;
+    for (let i = 0; i < heartCount; i++) {
+      const h = document.createElement("div");
+      h.className = "heart";
+      const size = 10 + Math.random() * 18;
+      h.style.width = size + "px";
+      h.style.height = size + "px";
+      h.style.left = (Math.random() * 100) + "vw";
+      h.style.animationDuration = (6 + Math.random() * 10) + "s";
+      h.style.animationDelay = (-Math.random() * 10) + "s";
+      h.style.opacity = (0.35 + Math.random() * 0.55).toFixed(2);
+      hearts.appendChild(h);
+    }
+
+    // Modal + playful "No" button dodge
+    const modal = document.getElementById("modal");
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const closeBtn = document.getElementById("closeBtn");
+
+    yesBtn.addEventListener("click", () => modal.classList.add("open"));
+    closeBtn.addEventListener("click", () => modal.classList.remove("open"));
+    modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.remove("open"); });
+
+    const dodge = () => {
+      const maxX = Math.min(window.innerWidth - 120, 420);
+      const maxY = Math.min(window.innerHeight - 60, 260);
+      noBtn.style.position = "relative";
+      noBtn.style.left = (Math.random() * maxX - maxX/2) + "px";
+      noBtn.style.top  = (Math.random() * maxY - maxY/2) + "px";
+    };
+    noBtn.addEventListener("mouseenter", dodge);
+    noBtn.addEventListener("click", dodge);
+  </script>
+</body>
+</html>
